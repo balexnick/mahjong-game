@@ -1,0 +1,15 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "react-app"
+  ],
+  "parser": "@babel/eslint-parser",
+  "plugins": ["react", "import", "react-hooks"],
+  "rules": {
+    "no-console": "warn",
+    "semi": ["warn", "always"],
+    "quotes": ["warn", "single"],
+    "react-hooks/exhaustive-deps": "warn",
+    "react/destructuring-assignment": ["warn"]
+  }
+}
