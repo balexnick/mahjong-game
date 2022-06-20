@@ -1,0 +1,16 @@
+.card {
+  box-shadow: 0 0 5px 0 red;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  cursor: pointer;
+  height: 45px;
+  font-size: 15px;
+
+  @media(min-width: 600px) {
+    height: 65px;
+    font-size: 25px;
+  }
+}
