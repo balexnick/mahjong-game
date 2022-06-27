@@ -1,5 +1,8 @@
 .card {
-  box-shadow: 0 0 5px 0 red;
+  &:disabled {
+    color: #000;
+  }
+  box-shadow: 0 0 5px 0 #9b3ebc;
   border-radius: 5px;
   display: flex;
   align-items: center;
@@ -8,9 +11,30 @@
   cursor: pointer;
   height: 45px;
   font-size: 15px;
+  transition: .5s;
+  background: #fff;
+  border: 0;
 
   @media(min-width: 600px) {
     height: 65px;
     font-size: 25px;
   }
+
+  &.hideAllClass {
+    box-shadow: 0 0 5px 0 #e5e5e5;
+    span {
+      opacity: 0;
+    }
+  }
+  &.isActive span{
+    opacity: 1;
+  }
+
+  &.visibleCard {
+    box-shadow: 0 0 5px 0 #9b3ebc;
+    span {
+      opacity: 1;
+    }
+  }
+
 }

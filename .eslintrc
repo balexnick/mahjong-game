@@ -3,7 +3,7 @@
     "eslint:recommended",
     "react-app"
   ],
-  "parser": "@babel/eslint-parser",
+  "parser": "@typescript-eslint/parser",
   "plugins": ["react", "import", "react-hooks"],
   "rules": {
     "no-console": "warn",

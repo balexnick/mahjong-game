@@ -1,26 +1,68 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect, useCallback, useState } from 'react';
 import Header from 'components/Header';
 import FieldWrapper from 'components/FieldWrapper';
 import Card from 'components/Card';
+import { getPrimeArray } from 'utils/getPrimeArray';
 
-type Props = {}
+const App = () => {
+  const [hideAllCards, setHideAllCards] = useState<boolean>(false);
+  const [openCards, setOpenCards] = useState<number[]>([]);
+  const [cardsAfterCompare, setCardsAfterCompare] = useState<number[]>([]);
+  const numberArray = useMemo(() => getPrimeArray(50), []);
 
-const App = (props: Props) => {
-  const mapArray = useMemo<number[]>(() => {
-    const arr = [];
-    for(let i = 1; i <= 30; i++){
-      arr.push(i);
+  const evaluate = useCallback(() => {
+    const [first, second] = openCards;
+    if (numberArray[first] === numberArray[second]) {
+      setCardsAfterCompare((prev) => [...prev, numberArray[first]]);
+      setOpenCards([]);
+      return;
     }
-    return arr;
-  }, []);
 
+    setTimeout(() => {
+      setOpenCards([]);
+    }, 500);
+  }, [numberArray, openCards]);
+
+
+  const handleCardClick = (index:number) => {
+    if (openCards.length === 1) {
+      setOpenCards((prev) => [...prev, index]);
+    } else {
+      setOpenCards([index]);
+    }
+  };
+
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
+    if (openCards.length === 2) {
+      timer = setTimeout(evaluate, 300);
+    }
+    return () => clearTimeout(timer);
+  }, [evaluate, openCards]);
+  
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
+    if (!hideAllCards) {
+      timer = setTimeout(() => setHideAllCards(true), 3000);
+    }
+    return () => clearTimeout(timer);
+  }, [hideAllCards]);
+
+  const checkIsCardActive = (index:number) => openCards.includes(index);
 
   return (
     <>
       <Header/>
       <FieldWrapper>
-        {mapArray.map((item, i) => (
-          <Card key={i} value={item}/>
+        {numberArray.map((item, i) => (
+          <Card
+            key={i} 
+            value={item}
+            onClick={() => handleCardClick(i)}
+            hideAllClass={hideAllCards}
+            isActive={checkIsCardActive(i)}
+            visibleCard={cardsAfterCompare.indexOf(item) > -1}
+          />
         ))}
       </FieldWrapper>
     </>
